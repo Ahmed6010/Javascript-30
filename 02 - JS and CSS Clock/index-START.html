@@ -63,46 +63,36 @@
       position: absolute;
       top: 50%;
       transform-origin: right center;
-      /* transform: rotate(90deg); */
-      transition: all 0.05s;
+      transform: rotate(90deg);
     }
 
   </style>
 
   <script>
-    var d = new Date()
-    let hour = d.getHours()
-    let hour_Degree = hour*30+90
-
-    let min = d.getMinutes()
-    let min_Degree = min*0.5+180
-
-    let sec = d.getSeconds()
-    let sec_Degree = sec*6+90
 
     const hour_hand = document.querySelector('.hour-hand')
-    hour_hand.style.transform = `rotate(${hour_Degree}deg)`
-
     const min_hand = document.querySelector('.min-hand')
-    min_hand.style.transform = `rotate(${min_Degree}deg)`
-
     const sec_hand = document.querySelector('.second-hand')
-    sec_hand.style.transform = `rotate(${sec_Degree}deg)`
 
-    setInterval(() => {
-      hour_Degree = hour_Degree + 30
-      hour_hand.style.transform = `rotate(${hour_Degree}deg)`;
-    }, 1000 * 60 * 60);
+    function setTime(){
+      var date = new Date()
+
+      let sec = date.getSeconds()
+      let sec_Degree = (sec/60)*360 + 90
+
+      let min = date.getMinutes()
+      let min_Degree = (min/60)*360 + 90
+
+      let hour = date.getHours()
+      let hour_Degree = (hour/12)*360 + 90
+
+      sec_hand.style.transform = `rotate(${sec_Degree}deg)`
+      min_hand.style.transform = `rotate(${min_Degree}deg)`
+      hour_hand.style.transform = `rotate(${hour_Degree}deg)`
+    }
+
     
-    setInterval(() => {
-      min_Degree = min_Degree + 0.5
-      min_hand.style.transform = `rotate(${min_Degree}deg)`;
-    }, 1000 * 60);
-
-    setInterval(() => {
-      sec_Degree = sec_Degree + 6
-      sec_hand.style.transform = `rotate(${sec_Degree}deg)`;
-    }, 1000);
+    setInterval(setTime, 1000);
 
   </script>
 </body>
