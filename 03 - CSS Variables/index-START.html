@@ -21,12 +21,25 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
 
-  :root {
-    --base: brown;
-    --spacing: 10px;
-    --blur: 10px
-  }
+    img {
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+      background-color: var(--base);
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
 
     body {
       text-align: center;
@@ -44,43 +57,23 @@
     input {
       width: 100px;
     }
-
-    img {
-      background-color: var(--base);
-      padding: var(--spacing);
-      filter: blur(var(--blur));
-    }
-
-    .hl {
-      color: var(--base);
-    }
   </style>
 
   <script>
-    let root = document.querySelector(':root');
-    
+    const image = document.querySelector('img')
     const inputs = document.querySelectorAll('input')
 
-    function update(){
-      const data = this.dataset.sizing || ''
-      root.style.setProperty(`--${this.name}`,this.value + data);
+    const handleChange = (e) => {
+      const unit = e.target.dataset.sizing || ''
+      console.log(unit)
+      document.documentElement.style.setProperty(`--${e.target.name}`, `${e.target.value}`+ unit)
     }
 
-    inputs.forEach(element => {
-      element.addEventListener('input',update)
-    });
+    inputs.forEach( input => input.addEventListener('change', handleChange) )
+    
+    inputs.forEach( input => input.addEventListener('mousemove', handleChange))
+    
 
-    // inputs[0].addEventListener('input',()=>{
-    //   root.style.setProperty('--spacing',`${inputs[0].value}px`);
-    // })
-
-    // inputs[1].addEventListener('input',()=>{
-    //   root.style.setProperty('--blur',`${inputs[1].value}px`);
-    // })
-
-    // inputs[2].addEventListener('input',()=>{
-    //   root.style.setProperty('--main-bg-color',`${inputs[2].value}`);
-    // })
 
   </script>
 
